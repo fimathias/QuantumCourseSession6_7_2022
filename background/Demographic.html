@@ -1,0 +1,21 @@
+{{ block title }}
+    Demographic Questionnaire
+    <img src="{% static 'finlit.png' %}" width="30%" style="float: right"/>
+{{ endblock }}
+{{ block content }}
+
+    <p>Before we proceed, we would like you to answer a few background questions.</p>
+
+    {# This helps include all form fields you have specified in pages.py #}
+    {{ formfields }}
+
+    {#
+    Alternatively, you may specify one by one like {{ formfield player.[formfield name] }}.
+    {{ formfield player.birth_year }}
+    {{ formfield player.gender }}
+    {{ formfield player.education }}
+    #}
+
+    {{ next_button }}
+
+{{ endblock }}

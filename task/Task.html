@@ -1,0 +1,64 @@
+{{ block title }}
+    Risk taking game
+{{ endblock }}
+
+{{ block content }}
+    <head>
+        <style>
+            #myRange {
+                width: 80%;
+                height: 25px;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <p>Now, suppose that you are rewarded 100 Euro for completing the survey.
+        You can invest part of (or all) your reward in a risky investment.
+        <br>
+        With the risky investment, in 1/3 of the cases you will win and gain 2.5 times the amount you invest,
+        in 2/3 of the cases you will lose the amount you invest.</p>
+
+    <p>The program will randomly draw an outcome at the end of the survey, "win" or "lose".</p>
+
+    <p>The amount you do not invest is not affected by the outcome of the risky asset.
+        Use the slider to see your potential gain and loss with the risky asset
+        and decide what percentage of your rewards to invest in it.</p>
+
+    <div class="slidecontainer">
+        <input type="range" min="1" max="100" value="50" class="slider" id="myRange" name="risk_choice">
+    </div>
+
+    <p>You invest <span id="demo"></span> Euro of 100 Euro in the risky investment.
+        <br>
+        <b>In 1/3 of the cases, you will gain <span id="demo_win"></span>% over your original reward.
+        <br>
+            In 2/3 of the cases, you will lose <span id="demo_loss"></span>% of your original reward.
+        </b>
+    </p>
+
+    <br>
+    <button class="otree-btn-next btn btn-primary" id="btn1">Next</button>
+
+    <script>
+        // Assign vars
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        var outcome_win = document.getElementById("demo_win");
+        var outcome_loss = document.getElementById("demo_loss");
+
+        // Update the values to show the value of slider and corresponding amount of win and loss
+        slider.oninput = function() {
+          output.innerHTML = this.value;
+          outcome_win.innerHTML = this.value * 2.5;
+          outcome_loss.innerHTML = this.value;
+        }
+
+        // Disable the Next button for five seconds.
+        var btn = $('#btn1');
+        btn.prop("disabled", true);
+        setTimeout(function () {
+            btn.prop("disabled", false);
+        }, 5000);
+    </script>
+{{ endblock }}
