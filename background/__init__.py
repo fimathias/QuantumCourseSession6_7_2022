@@ -30,14 +30,14 @@ def creating_session(subsession: Subsession):
         p.participant.vars['gender_seq'] = gender_option
 
         # Manually record the order of options one by one
-        # p.gender_seq0 = gender_option[0][0]
-        # p.gender_seq1 = gender_option[1][0]
-        # p.gender_seq2 = gender_option[2][0]
+        p.gender_seq0 = gender_option[0][0]
+        p.gender_seq1 = gender_option[1][0]
+        p.gender_seq2 = gender_option[2][0]
 
         # More efficiently, use a loop to record the order of options
-        for i in range(0, 3):
-            str_gender = 'gender_seq%s' % i
-            setattr(p, str_gender, gender_option[i][0])
+        # for i in range(0, 3):
+        #     str_gender = 'gender_seq%s' % i
+        #     setattr(p, str_gender, gender_option[i][0])
 
 
 class Player(BasePlayer):

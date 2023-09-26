@@ -58,6 +58,9 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect
     )
 
+    feedback = models.LongStringField(
+
+    )
     q_correct = models.IntegerField()
 
     def count_correct(self):
@@ -82,6 +85,10 @@ class MyPage(Page):
 
 class Results(Page):
     form_model = 'player'
+
+    # @staticmethod
+    # def is_displayed(player: Player):
+    #     return player.q_correct == 3
 
 
 page_sequence = [MyPage, Results]
