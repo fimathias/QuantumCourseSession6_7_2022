@@ -1,5 +1,5 @@
 -r requirements_base.txt
-psycopg2>=2.8,<2.9
-otree==5.11.0b2
+#psycopg2>=2.8,<2.9
+#otree==5.11.0b2
 numpy>=1.16.2
 scipy>=1.1.0

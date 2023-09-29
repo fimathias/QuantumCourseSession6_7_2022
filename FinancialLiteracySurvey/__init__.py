@@ -1,6 +1,5 @@
 from otree.api import *
 
-
 author = 'Marco'
 
 doc = """
@@ -47,6 +46,29 @@ class Player(BasePlayer):
         ],
         widget=widgets.RadioSelect
     )
+    question3 = models.IntegerField(
+        label="If interest rates rise, what will typically happen to bond prices?",
+        choices=[
+            [1, "They will rise"],
+            [2, "They will fall"],
+            [3, "They will stay the same"],
+            [4, "There is no relationship between bond prices and the interest rate"],
+            [9, "Don't know"],
+            [0, "Prefer not to say"],
+        ],
+        widget=widgets.RadioSelect
+    )
+    question4 = models.IntegerField(
+        label="A 15-year mortgage typically requires higher monthly payments than a 30-year mortgage, but the total "
+              "interest paid over the life of the loan will be less.",
+        choices=[
+            [1, "True"],
+            [2, "False"],
+            [9, "Don't know"],
+            [0, "Prefer not to say"],
+        ],
+        widget=widgets.RadioSelect
+    )
     question5 = models.IntegerField(
         label="Buying a single company’s stock usually provides a safer return than a stock mutual fund.",
         choices=[
@@ -57,9 +79,18 @@ class Player(BasePlayer):
         ],
         widget=widgets.RadioSelect
     )
+    feedbackYN = models.IntegerField(
+        label="Did you find the survey interesting?",
+        choices=[
+            [1, 'Yes'],
+            [0, 'No'],
+        ],
+        widget=widgets.RadioSelect
+    )
 
-    feedback = models.LongStringField(
-
+    feedbackTEXT = models.LongStringField(
+        label="Open comments",
+        blank=True
     )
     q_correct = models.IntegerField()
 
@@ -69,6 +100,10 @@ class Player(BasePlayer):
             self.q_correct = self.q_correct + 1
         if self.question2 == 3:
             self.q_correct = self.q_correct + 1
+        if self.question3 == 2:
+            self.q_correct = self.q_correct + 1
+        if self.question4 == 1:
+            self.q_correct = self.q_correct + 1
         if self.question5 == 2:
             self.q_correct = self.q_correct + 1
 
@@ -76,7 +111,7 @@ class Player(BasePlayer):
 # PAGES
 class MyPage(Page):
     form_model = 'player'
-    form_fields = ['question1', 'question2', 'question5']
+    form_fields = ['question1', 'question2', 'question3', 'question4', 'question5']
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
@@ -91,4 +126,13 @@ class Results(Page):
     #     return player.q_correct == 3
 
 
-page_sequence = [MyPage, Results]
+class Feedback(Page):
+    form_model = 'player'
+    form_fields = ['feedbackYN', 'feedbackTEXT']
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.q_correct == 5
+
+
+page_sequence = [MyPage, Results, Feedback]

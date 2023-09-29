@@ -28,9 +28,9 @@ def creating_session(subsession: Subsession):
     for p in subsession.get_players():
         list_risk_seq = C.list_risk_choice.copy()  # Call the list you defined, ['win', 'loss']
 
-        # Randomly draw one from 'win' and 'loss', with probability 0.33 an 0.67, respectively
+        # Randomly draw one from 'win' and 'loss', with probability 0.5 an 0.5, respectively
         # You need to import numpy to randomly draw
-        p.participant.vars['risk_outcome'] = numpy.random.choice(list_risk_seq, p=[0.33, 0.67])
+        p.participant.vars['risk_outcome'] = numpy.random.choice(list_risk_seq, p=[0.5, 0.5])
 
         # Define participant var to attach the drawn outcome to a subject.
         # This is to help call/use the var for a subject in other apps in the same project.
@@ -55,10 +55,13 @@ class Outcome(Page):
     def vars_for_template(player: Player):  # Define the variables that are used in page template.
         if player.risk_outcome == 'win':
             outcome = 100 + player.risk_choice * 2.5  # Assign value to outcome when a subject wins.
+            remaining = 100 - player.risk_choice
         else:
             outcome = 100 - player.risk_choice  # Assign value to outcome when a subject loses.
+            remaining = 100 - player.risk_choice
         return {  # Return variables with the values that you have defined. 'var_name': local_variable
-            'outcome': outcome
+            'outcome': outcome,
+            'remaining': remaining
         }
 
 

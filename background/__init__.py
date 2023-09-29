@@ -67,7 +67,8 @@ class Player(BasePlayer):
         choices=[('lower_secondary', 'Lower secondary education'),
                  ('upper_secondary', 'Upper secondary level education'),
                  ('bachelor', 'Bachelor\'s or equivalent level'),  # Use \ if there is ' in the string
-                 ('master', 'Master\'s or equivalent level or doctoral level')],
+                 ('master', 'Master\'s or equivalent level or doctoral level'),
+                 ('no_answer', 'Prefer not to answer')],
         blank=True
     )
 
@@ -86,6 +87,8 @@ class Demographic(Page):
     def error_message(player: Player, values):
         if not values['birth_year'] or not values['gender'] or not values['education']:
             return 'Please answer all questions.'  # Return an error message when any of the questions is not answered.
+        elif not (1900 <= values['birth_year'] <= 2023):
+            return 'Please input a sensible birth year'
 
 
 page_sequence = [Demographic]
